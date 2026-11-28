@@ -1711,6 +1711,115 @@ paths:
                     "@type": dfc-b:SuppliedProduct
                     dfc-b:name: Pesto
                     dfc-b:hasVariant: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+  "/api/dfc/enterprises/{enterprise_id}/sale_sessions":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: List SaleSessions
+      security:
+      - oidc_token: []
+      tags:
+      - SaleSessions
+      responses:
+        '200':
+          description: success
+          content:
+            application/json; charset=utf-8:
+              examples:
+                success:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprises/10000/sale_sessions/40000
+                      "@type": dfc-b:SaleSession
+                      dfc-b:beginDate: Thu Nov 19 2026 22:00:00 UTC
+                      dfc-b:endDate: Mon Nov 30 2026 07:00:00 UTC
+                      dfc-b:lists: http://test.host/api/dfc/enterprises/10000/sale_sessions/40000/offers/20001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/sale_sessions/40000/offers/20001
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 11.5
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 5
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/10001/supplied_products/20001
+                    - "@id": http://test.host/api/dfc/enterprises/10001/supplied_products/20001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple - 1g
+                      dfc-b:description: Red
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10001/catalog_items/20001
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
+                      ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10001?spree_product_id=90000
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
+  "/api/dfc/enterprises/{enterprise_id}/sale_sessions/{id}":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show SaleSession
+      security:
+      - oidc_token: []
+      tags:
+      - SaleSessions
+      responses:
+        '200':
+          description: success
+          content:
+            application/json; charset=utf-8:
+              examples:
+                success:
+                  value:
+                    "@context": https://w3id.org/dfc/ontology/context/context_1.16.0.json
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprises/10000/sale_sessions/40000
+                      "@type": dfc-b:SaleSession
+                      dfc-b:beginDate: Thu Nov 19 2026 22:00:00 UTC
+                      dfc-b:endDate: Mon Nov 30 2026 07:00:00 UTC
+                      dfc-b:lists: http://test.host/api/dfc/enterprises/10000/sale_sessions/40000/offers/20001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/sale_sessions/40000/offers/20001
+                      "@type": dfc-b:Offer
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 11.5
+                        dfc-b:hasUnit: dfc-m:AustralianDollar
+                      dfc-b:stockLimitation: 5
+                      dfc-b:offeredItem: http://test.host/api/dfc/enterprises/10001/supplied_products/20001
+                    - "@id": http://test.host/api/dfc/enterprises/10001/supplied_products/20001
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple - 1g
+                      dfc-b:description: Red
+                      dfc-b:hasQuantity:
+                        "@type": dfc-b:QuantitativeValue
+                        dfc-b:hasUnit: dfc-m:Gram
+                        dfc-b:value: 1.0
+                      dfc-b:referencedBy: http://test.host/api/dfc/enterprises/10001/catalog_items/20001
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
+                      ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10001?spree_product_id=90000
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
   "/api/dfc/enterprises/{enterprise_id}/social_medias/{name}":
     get:
       summary: Show social media
